@@ -76,6 +76,8 @@ The system is designed using RESTful architecture and follows MVC design princip
 
 ## 📂 Project Structure
 
+
+```
 Airbnb-Clone/
 │
 ├── controllers/     # Handles request logic and response flow
@@ -94,3 +96,4 @@ Airbnb-Clone/
 ├── package.json     # Project dependencies and scripts
 ├── package-lock.json
 ├── .gitignore
+```
