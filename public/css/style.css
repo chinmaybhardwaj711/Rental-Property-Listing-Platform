@@ -132,3 +132,13 @@ body{
     height: 400px;
     width: 80vh;
 }
+
+.listing-link{
+    text-decoration: none;
+    color: inherit;
+}
+.tax-info{
+    display: none;
+    font-style: italic;
+  
+}

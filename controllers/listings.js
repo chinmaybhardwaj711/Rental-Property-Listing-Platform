@@ -3,56 +3,84 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
-// module.exports.index = async (req,res)=>{
-//    const allListing  =  await Listing.find({});
-//    res.render("listings/index.ejs", { allListing })
-// };
+
 module.exports.index = async (req, res) => {
   let { search, category } = req.query;
+  let filter = {};
 
-  let allListing;
-
+  // SEARCH FILTER
   if (search && search.trim() !== "") {
-    // 🔍 SEARCH ONLY
-    allListing = await Listing.find({
-      $or: [
-        { location: { $regex: search, $options: "i" } },
-        { country: { $regex: search, $options: "i" } },
-        { title: { $regex: search, $options: "i" } }
-      ]
-    });
-
-  } else if (category && category !== "") {
-    // 🎯 FILTER ONLY
-    allListing = await Listing.find({ category });
-
-  } else {
-    // 📦 DEFAULT
-    allListing = await Listing.find({});
+    filter.$or = [
+      { location: { $regex: search, $options: "i" } },
+      { country: { $regex: search, $options: "i" } },
+      { title: { $regex: search, $options: "i" } }
+    ];
   }
 
-  res.render("listings/index.ejs", { allListing,category,search});
+  // CATEGORY FILTER (only if valid)
+  if (category && category.trim() !== "" && category !== "All") {
+    filter.category = category;
+  }
+
+  const allListing = await Listing.find(filter);
+
+  // console.log("Total Listings in DB:", await Listing.countDocuments());
+  // console.log("Listings Displayed:", allListing.length);
+  // console.log("Active Filter:", filter);
+
+  res.render("listings/index.ejs", {
+    allListing,
+    category,
+    search
+  });
+
+  // console.log("Listings Displayed:", allListing.length);
 };
-module.exports.renderNewForm = (req,res)=>{
-     res.render("listings/new.ejs")
-}
 
 
-module.exports.showListing = async (req,res)=>{
-    let {id} = req.params;
-    const listing = await Listing.findById(id).populate( {path: "reviews", populate: {
-        path: "author",
-    },
-}).populate("owner");
+// module.exports.showListing = async (req,res)=>{
+//     let {id} = req.params;
+//     const listing = await Listing.findById(id).populate( {path: "reviews", populate: {
+//         path: "author",
+//     },
+// }).populate("owner");
+//     if (!listing) {
+//         req.flash("error", "Listing you requested for does not exist");
+//         return res.redirect("/listings");
+//     }
+//     console.log(listing);
+//     res.render("listings/show.ejs", {listing, mapToken: process.env.MAP_TOKEN},
+        
+//     )
+// }
+module.exports.showListing = async (req, res) => {
+    let { id } = req.params;
+
+    const listing = await Listing.findById(id)
+        .populate({
+            path: "reviews",
+            populate: {
+                path: "author",
+            },
+        })
+        .populate("owner");
+
     if (!listing) {
         req.flash("error", "Listing you requested for does not exist");
         return res.redirect("/listings");
     }
+
+    // Handle missing owner for seeded data
+    if (!listing.owner) {
+        listing.owner = { username: "Admin" };
+    }
+
     console.log(listing);
-    res.render("listings/show.ejs", {listing, mapToken: process.env.MAP_TOKEN},
-        
-    )
-}
+    res.render("listings/show.ejs", {
+        listing,
+        mapToken: process.env.MAP_TOKEN,
+    });
+};
 
 
 module.exports.createListing = async (req,res,next)=>{
@@ -124,3 +152,4 @@ module.exports.destroy = async(req,res)=>{
     res.redirect("/listings")
 
 }
+

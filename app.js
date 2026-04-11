@@ -5,7 +5,7 @@ if (process.env.NODE_ENV != "production") {
 
 
  
-console.log(process.env.SECRET);
+// console.log(process.env.SECRET);
 
 
 
@@ -31,13 +31,14 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("./models/user.js");
 
 const dbURL = process.env.ATLASDB_URL
+// console.log("Connected to DB:", dbURL);
 
 main().then(()=>{
     console.log("connected to db");
 }).catch((err)=>{
     console.log(err);
 })
-// 'mongodb://127.0.0.1:27017/wanderlust'
+
 async function main() {
     await mongoose.connect(dbURL);
 
@@ -49,7 +50,7 @@ async function main() {
 const store = new MongoStore({
     mongoUrl: dbURL,
     crypto: {
-        secret: "mysupersecretcode"
+        secret: process.env.SECRET,
     },
     touchAfter: 24*3600,
 })
@@ -61,7 +62,7 @@ store.on("error", (err)=>{
 
 const sessionOptions = {
     store,
-    secret: "mysupersecretcode",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -115,6 +116,10 @@ app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 
+
+app.get("/",(req,res)=>{
+    res.redirect("/listings");
+})
 
 
 
