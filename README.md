@@ -1,4 +1,4 @@
-# 🏡 Airbnb Clone
+# 🏡 Rental Property Listing Platform
 
 A full-stack Airbnb-inspired web application that enables users to discover, list, and review rental properties. This project replicates core Airbnb functionalities while emphasizing scalable backend design, secure authentication, and cloud-based deployment.
 
