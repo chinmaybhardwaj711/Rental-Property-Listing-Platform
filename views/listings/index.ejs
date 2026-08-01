@@ -53,73 +53,71 @@
 
 
     <div id="filters" >
-     <a href="/listings?category=Trending" 
-      class="filter <%= category === 'Trending' ? 'active' : '' %>">
-      
-        <div><i class="fa-solid fa-fire"></i></div>
-        <p>Trending</p>
-        </a>
-    
+<a href="/listings?category=Trending<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Trending' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+  </a>
 
+  <a href="/listings?category=Rooms<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Rooms' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Rooms</p>
+  </a>
 
-     <a href="/listings?category=Rooms"  class="filter <%= category === 'Rooms' ? 'active' : '' %>">
-       <div><i class="fa-solid fa-bed"></i></div>
-       <p>Rooms</p>
-       </a>
-      
-      
-       <a href="/listings?category=Iconic Cities"  class="filter <%= category === 'Iconic Cities' ? 'active' : '' %>">
+  <a href="/listings?category=Iconic%20Cities<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Iconic Cities' ? 'active' : '' %>">
       <div><i class="fa-solid fa-mountain-city"></i></div>
       <p>Iconic Cities</p>
-      </a>
-      
-      
-    <a href="/listings?category=Mountains"  class="filter <%= category === 'Mountains' ? 'active' : '' %>">
+  </a>
+
+  <a href="/listings?category=Mountains<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Mountains' ? 'active' : '' %>">
       <div><i class="fa-solid fa-mountain"></i></div>
       <p>Mountains</p>
-      </a>
-      
+  </a>
 
-    <a href="/listings?category=Castles"  class="filter <%= category === 'Castles' ? 'active' : '' %>">
+  <a href="/listings?category=Castles<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Castles' ? 'active' : '' %>">
       <div><i class="fa-brands fa-fort-awesome"></i></div>
       <p>Castles</p>
-      </a>
-      
+  </a>
 
-    <a href="/listings?category=Amazing Pools"  class="filter <%= category === 'Amazing Pools' ? 'active' : '' %>">
+  <a href="/listings?category=Amazing%20Pools<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Amazing Pools' ? 'active' : '' %>">
       <div><i class="fa-solid fa-person-swimming"></i></div>
       <p>Amazing Pools</p>
-      </a>
-     
+  </a>
 
-     <a href="/listings?category=Camping"  class="filter <%= category === 'Camping' ? 'active' : '' %>">
-        <div><i class="fa-solid fa-campground"></i></div>
-        <p>Camping</p>
-        </a>
-       
+  <a href="/listings?category=Camping<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Camping' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-campground"></i></div>
+      <p>Camping</p>
+  </a>
 
-     <a href="/listings?category=Farms"  class="filter <%= category === 'Farms' ? 'active' : '' %>">
-          <div><i class="fa-solid fa-cow"></i></div>
-          <p>Farms</p>
-          </a>
-      
+  <a href="/listings?category=Farms<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Farms' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-cow"></i></div>
+      <p>Farms</p>
+  </a>
 
-     <a href="/listings?category=Arctic"  class="filter <%= category === 'Arctic' ? 'active' : '' %>">
-         <div><i class="fa-solid fa-snowflake"></i></div>
-         <p>Arctic</p>
-         </a>
-      
+  <a href="/listings?category=Arctic<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Arctic' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-snowflake"></i></div>
+      <p>Arctic</p>
+  </a>
 
-     <a href="/listings?category=Domes"  class="filter <%= category === 'Domes' ? 'active' : '' %>">
-         <div><i class="fa-solid fa-landmark-dome"></i></div>
-         <p>Domes</p>
-         </a>
-      
-       <a href="/listings?category=Boats"  class="filter <%= category === 'Boats' ? 'active' : '' %>">
-         <div><i class="fa-solid fa-sailboat"></i></div>
-         <p>Boats</p>
-         </a>
-     
+  <a href="/listings?category=Domes<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Domes' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-landmark-dome"></i></div>
+      <p>Domes</p>
+  </a>
+
+  <a href="/listings?category=Boats<%= search ? '&search=' + encodeURIComponent(search) : '' %>"
+     class="filter <%= category === 'Boats' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-sailboat"></i></div>
+      <p>Boats</p>
+  </a>
 
       <div class="tax-toggle">
         <div class="form-check-reverse form-switch">
@@ -157,6 +155,61 @@
     
   <% } %> 
     </div>
+
+<% if (totalPages > 1) { %>
+<nav class="mt-5">
+    <ul class="pagination justify-content-center">
+
+        <!-- Previous -->
+        <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+            <a class="page-link"
+               href="/listings?page=<%= currentPage - 1 %><%= category ? '&category=' + encodeURIComponent(category) : '' %><%= search ? '&search=' + encodeURIComponent(search) : '' %>">
+                Previous
+            </a>
+        </li>
+
+        <!-- Page Numbers -->
+        <% for(let i = 1; i <= totalPages; i++) { %>
+
+            <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+                <a class="page-link"
+                   href="/listings?page=<%= i %><%= category ? '&category=' + encodeURIComponent(category) : '' %><%= search ? '&search=' + encodeURIComponent(search) : '' %>">
+                    <%= i %>
+                </a>
+            </li>
+
+        <% } %>
+
+        <!-- Next -->
+        <li class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+            <a class="page-link"
+               href="/listings?page=<%= currentPage + 1 %><%= category ? '&category=' + encodeURIComponent(category) : '' %><%= search ? '&search=' + encodeURIComponent(search) : '' %>">
+                Next
+            </a>
+        </li>
+
+    </ul>
+</nav>
+<% } %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script>
       let taxSwitch = document.getElementById("flexSwitchCheckDefault");
