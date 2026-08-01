@@ -1,6 +1,7 @@
 # 🏡 StayForge – Full Stack Property Rental Platform
 
-StayForge is a production-oriented Airbnb-inspired property rental platform built with the MERN ecosystem. It enables users to discover, list, review, and book rental properties while demonstrating scalable backend architecture, caching, transaction-safe booking workflows, automated testing, containerization, and CI/CD.
+StayForge is a production-oriented property rental and booking platform built with **Node.js, Express.js, MongoDB Atlas**, and a server-rendered **EJS** frontend. It features transaction-safe, concurrency-controlled bookings, a Redis cache-aside layer, MongoDB text-indexed search, automated testing, Docker containerization, and CI/CD using GitHub Actions.
+
 
 🔗 **Live Demo:** https://major-project-1-s0d6.onrender.com
 
