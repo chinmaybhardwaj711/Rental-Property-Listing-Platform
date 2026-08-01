@@ -1,99 +1,260 @@
-# 🏡 Rental Property Listing Platform
+# 🏡 StayForge – Full Stack Property Rental Platform
 
-A full-stack Airbnb-inspired web application that enables users to discover, list, and review rental properties. This project replicates core Airbnb functionalities while emphasizing scalable backend design, secure authentication, and cloud-based deployment.
+StayForge is a production-oriented Airbnb-inspired property rental platform built with the MERN ecosystem. It enables users to discover, list, review, and book rental properties while demonstrating scalable backend architecture, caching, transaction-safe booking workflows, automated testing, containerization, and CI/CD.
 
 🔗 **Live Demo:** https://major-project-1-s0d6.onrender.com
 
 ---
 
-## 📌 Overview
+# 🚀 Features
 
-This application allows users to:
-- Browse property listings
-- Create and manage listings
-- Upload images to cloud storage
-- Leave reviews and ratings
-- Authenticate securely
+## 👤 Authentication & Authorization
 
-The system is designed using RESTful architecture and follows MVC design principles.
+- User Registration & Login
+- Secure session-based authentication using Passport.js
+- Role-based authorization
+- Protected routes
+- Flash messages
 
 ---
 
-## ⚙️ Tech Stack
+## 🏡 Property Listings
 
-### 🧠 Backend
+- Create, Edit and Delete listings
+- Search listings
+- Category filtering
+- Pagination
+- Image uploads via Cloudinary
+- Interactive location maps using Mapbox
+
+---
+
+## ⭐ Reviews
+
+- Add Reviews
+- Delete Reviews
+- Rating system
+- Review ownership validation
+
+---
+
+## 📅 Booking Engine
+
+- Book available properties
+- Booking availability validation
+- Date overlap detection
+- Transaction-safe booking creation
+- Optimistic concurrency control
+- Display unavailable booking dates
+
+---
+
+## ⚡ Performance Optimizations
+
+- Redis cache for listing pages
+- Redis cache for individual listings
+- Automatic cache invalidation
+- HTTP compression
+- Request logging using Pino
+
+---
+
+## 🔒 Security
+
+- Helmet security headers
+- Session management
+- Joi input validation
+- Protected API routes
+- Environment variable management using dotenv
+
+---
+
+## 🧪 Testing
+
+- Unit testing with Jest
+- Booking overlap validation tests
+- Edge-case testing for booking logic
+
+---
+
+## 🐳 DevOps
+
+- Dockerized application
+- Docker Compose configuration
+- GitHub Actions CI pipeline
+- MongoDB Atlas integration
+- Upstash Redis integration
+
+---
+
+# 🛠 Tech Stack
+
+## Backend
+
 - Node.js
 - Express.js
+- MongoDB
+- Mongoose
+- Redis
+- Passport.js
+- Joi
 
-### 🎨 Frontend
-- EJS (Server-side rendering)
-- HTML, CSS, JavaScript
+## Frontend
 
-### 🗄️ Database
-- MongoDB Atlas (Cloud Database)
+- EJS
+- Bootstrap 5
+- HTML
+- CSS
+- JavaScript
 
-### ☁️ Cloud & Deployment
-- Render (Backend Hosting)
-- Cloudinary (Image Storage)
+## Cloud Services
 
-### 🔐 Authentication & Security
-- Passport.js (Local Strategy)
-- Express-session
-- dotenv (Environment management)
+- MongoDB Atlas
+- Cloudinary
+- Mapbox
+- Upstash Redis
 
----
+## DevOps
 
-## 🏗️ Architecture
+- Docker
+- Docker Compose
+- GitHub Actions
 
-- Follows MVC (Model-View-Controller) pattern
-- RESTful API design
-- Middleware-based request handling
-- Separation of concerns for scalability
+## Testing
 
----
-
-## ✨ Features
-
-### 👤 Authentication
-- User signup & login
-- Session-based authentication
-- Password hashing and secure storage
-
-### 🏠 Listings
-- Create, edit, delete property listings
-- Upload multiple images via Cloudinary
-- Location-based metadata
-
-### ⭐ Reviews
-- Add and delete reviews
-- Rating system per listing
-
-### 🔍 Search & UX
-- Clean UI with responsive design
-- Structured navigation for listings
+- Jest
 
 ---
 
-## 📂 Project Structure
+# 🏗 Architecture
 
+The application follows the MVC (Model-View-Controller) architecture.
 
 ```
-Airbnb-Clone/
-│
-├── controllers/     # Handles request logic and response flow
-├── init/            # Initial data setup / database seeding
-├── models/          # Mongoose schemas (User, Listing, Review, etc.)
-├── routes/          # Express route definitions
-├── utils/           # Utility/helper functions
-├── public/          # Static assets (CSS, JS, images)
-├── views/           # EJS templates (UI rendering)
-│
-├── app.js           # Main server entry point
-├── middleware.js    # Custom middleware (auth, error handling)
-├── cloudconfig.js   # Cloudinary configuration
-├── schema.js        # Joi validation schemas
-│
-├── package.json     # Project dependencies and scripts
-├── package-lock.json
-├── .gitignore
+Client
+      │
+      ▼
+Express Routes
+      │
+      ▼
+Controllers
+      │
+      ▼
+Business Logic
+      │
+      ▼
+MongoDB Atlas
+      │
+Redis Cache
 ```
+
+---
+
+# 📂 Project Structure
+
+```
+StayForge/
+│
+├── controllers/
+├── models/
+├── routes/
+├── views/
+├── public/
+├── middleware/
+├── utils/
+│
+├── tests/
+├── benchmark/
+├── .github/
+│   └── workflows/
+│
+├── Dockerfile
+├── docker-compose.yml
+├── app.js
+├── package.json
+└── README.md
+```
+
+---
+
+# ⚙️ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/chinmaybhardwaj711/MAJOR-PROJECT.git
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Create a `.env` file
+
+```env
+ATLASDB_URL=
+REDIS_URL=
+MAP_TOKEN=
+SECRET=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
+```
+
+Run locally
+
+```bash
+npm start
+```
+
+Run tests
+
+```bash
+npm test
+```
+
+Run with Docker
+
+```bash
+docker compose up --build
+```
+
+---
+
+# 📊 Key Engineering Highlights
+
+- RESTful API architecture
+- MVC design pattern
+- Redis Cache-Aside strategy
+- Automatic cache invalidation
+- MongoDB ACID transactions
+- Optimistic concurrency control for bookings
+- Secure authentication using Passport.js
+- Cloud image storage with Cloudinary
+- Interactive maps with Mapbox
+- Docker containerization
+- GitHub Actions CI/CD
+- Unit testing with Jest
+
+---
+
+# 📈 Future Improvements
+
+- Flatpickr calendar with disabled booked dates
+- Booking cancellation
+- User booking dashboard
+- Owner booking management
+- Payment gateway integration (Stripe/Razorpay)
+- Admin dashboard
+- API documentation using Swagger
+- Integration testing with Supertest
+
+---
+
+# 👨‍💻 Author
+
+**Chinmay Bhardwaj**
+
+GitHub: https://github.com/chinmaybhardwaj711
