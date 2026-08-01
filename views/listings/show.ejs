@@ -47,7 +47,70 @@
   
  <% }  %> 
  
+<div class="row mt-4">
+    <div class="col-6 offset-3">
 
+        <h4>Book this stay</h4>
+
+        <form
+            method="POST"
+            action="/listings/<%= listing._id %>/bookings"
+            class="mb-3"
+        >
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Check-in</label>
+                    <input
+                        type="date"
+                        name="booking[checkIn]"
+                        class="form-control"
+                        required
+                    >
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Check-out</label>
+                    <input
+                        type="date"
+                        name="booking[checkOut]"
+                        class="form-control"
+                        required
+                    >
+                </div>
+
+                <div class="col-md-4 d-flex align-items-end">
+                    <button
+                        type="submit"
+                        class="btn btn-dark w-100"
+                    >
+                        Book Now
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+        <% if (bookings && bookings.length) { %>
+
+            <div class="alert alert-light border">
+                <strong>Already booked:</strong>
+
+                <ul class="mb-0 mt-2">
+                    <% bookings.forEach(b => { %>
+                        <li>
+                            <%= new Date(b.checkIn).toDateString() %>
+                            →
+                            <%= new Date(b.checkOut).toDateString() %>
+                        </li>
+                    <% }) %>
+                </ul>
+            </div>
+
+        <% } %>
+
+    </div>
+</div>
 
   <div class="col-8 offset-3 mb-3 mt-3">
     

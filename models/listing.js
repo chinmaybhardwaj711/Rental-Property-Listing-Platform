@@ -36,6 +36,10 @@ const listingSchema = new Schema({
   ],
   default: "Trending"
 },
+    bookingLock: {
+    type: Number,
+    default: 0,
+    },
 
 
     reviews: [
@@ -64,7 +68,12 @@ const listingSchema = new Schema({
  
 });
 listingSchema.index({category:1 , title:1 , location:1});
- 
+ listingSchema.index({
+    title: "text",
+    location: "text",
+    country: "text",
+});
+
 
 listingSchema.post("findOneAndDelete", async (listingDoc)=>{
     if(listingDoc){
