@@ -1,8 +1,16 @@
 
 const Listing = require("../models/listing")
-const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
-const mapToken = process.env.MAP_TOKEN;
-const geocodingClient = mbxGeocoding({ accessToken: mapToken });
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+
+function getGeocodingClient() {
+    if (!process.env.MAP_TOKEN) {
+        throw new Error("Mapbox is not configured.");
+    }
+
+    return mbxGeocoding({
+        accessToken: process.env.MAP_TOKEN,
+    });
+}
 const redisClient = require("../utils/redisClient");
 const Booking = require("../models/booking");
 
@@ -240,13 +248,14 @@ module.exports.renderNewForm = (req, res) => {
 
 
 module.exports.createListing = async (req,res,next)=>{
+const geocodingClient = getGeocodingClient();
 
-let response = await geocodingClient.forwardGeocode({
-  query: req.body.listing.location,
-  limit: 1
-})
-  .send();
-  
+let response = await geocodingClient
+    .forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1,
+    })
+    .send();
 
  
   
