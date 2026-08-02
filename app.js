@@ -39,12 +39,12 @@ const logger = pino({
     level: "info",
 });
 
-async function main() {
-    await mongoose.connect(dbURL);
-    console.log("✅ Connected to MongoDB");
-}
+// async function main() {
+//     await mongoose.connect(dbURL);
+//     console.log("✅ Connected to MongoDB");
+// }
 
-main().catch(console.error);
+// main().catch(console.error);
 
 /* ---------------- SESSION ---------------- */
 
@@ -200,6 +200,7 @@ app.use((err, req, res, next) => {
 
 /* ---------------- SERVER ---------------- */
 
-app.listen(8080, () => {
-    console.log("🚀 Server running on port 8080");
-});
+// app.listen(8080, () => {
+//     console.log("🚀 Server running on port 8080");
+// });
+module.exports = app;

@@ -7,8 +7,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
-    
+    "start": "node server.js",
+    "test": "jest --runInBand --setupFilesAfterEnv ./tests/setup.js"
   },
   "keywords": [],
   "author": "",
@@ -40,6 +40,8 @@
     "pino-http": "^11.0.0"
   },
   "devDependencies": {
-    "jest": "^30.4.2"
+    "jest": "^30.4.2",
+    "mongodb-memory-server": "^11.2.0",
+    "supertest": "^7.2.2"
   }
 }
