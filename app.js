@@ -47,32 +47,37 @@ const logger = pino({
 // main().catch(console.error);
 
 /* ---------------- SESSION ---------------- */
+let store;
 
-const store = MongoStore.create({
-    mongoUrl: dbURL,
-    crypto: {
-        secret: process.env.SECRET,
-    },
-    touchAfter: 24 * 3600,
-});
-
-store.on("error", (err) => {
-    console.log("Mongo Session Store Error", err);
-});
-
-app.use(
-    session({
-        store,
-        secret: process.env.SECRET,
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            httpOnly: true,
-            expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-            maxAge: 7 * 24 * 60 * 60 * 1000,
+if (process.env.NODE_ENV !== "test") {
+    store = MongoStore.create({
+        mongoUrl: dbURL,
+        crypto: {
+            secret: process.env.SECRET,
         },
-    })
-);
+        touchAfter: 24 * 3600,
+    });
+
+    store.on("error", (err) => {
+        console.log("Mongo Session Store Error", err);
+    });
+}
+const sessionConfig = {
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    },
+};
+
+if (store) {
+    sessionConfig.store = store;
+}
+
+app.use(session(sessionConfig));
 
 app.use(flash());
 
