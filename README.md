@@ -1,216 +1,274 @@
-🏡 StayForge — Property Rental & Booking Platform
+# 🏡 StayForge — Property Rental & Booking Platform
 
 
 
-StayForge is a production-oriented property rental and booking platform built with Node.js, Express.js, MongoDB Atlas, and an EJS frontend. It showcases transaction-safe booking, optimistic concurrency control, Redis cache-aside caching, MongoDB text-indexed search, Docker, CI/CD, and automated testing.
+StayForge is a production-oriented property rental and booking platform built with **Node.js, Express.js, MongoDB Atlas**, and a server-rendered **EJS** frontend. The project demonstrates scalable backend engineering through transaction-safe booking workflows, optimistic concurrency control, Redis cache-aside caching, MongoDB text-indexed search, automated testing, Docker containerization, and CI/CD using GitHub Actions.
 
-Live Demo: https://major-project-1-s0d6.onrender.com
+🔗 **Live Demo:** https://major-project-1-s0d6.onrender.com
 
-🚀 Features
+---
 
-Authentication
+# 🚀 Features
 
-Passport.js Local Authentication
+## 👤 Authentication & Authorization
 
-Session-based login
+- User registration & login using Passport.js (Local Strategy)
+- Secure session-based authentication with MongoDB-backed session storage
+- Ownership-based authorization for listings and reviews
+- Protected routes using custom middleware
+- Flash messages for authentication and CRUD operations
 
-MongoDB session store
+---
 
-Protected routes
+## 🏡 Property Listings
 
-Ownership authorization
+- Create, edit, and delete rental property listings
+- Upload property images to Cloudinary
+- MongoDB full-text search using text indexes
+- Category-based filtering
+- Pagination for scalable listing retrieval
+- Interactive property maps using Mapbox Geocoding
 
-Property Listings
+---
 
-CRUD listings
+## ⭐ Reviews & Ratings
 
-Cloudinary uploads
+- Five-star rating system
+- Add and delete reviews
+- Review ownership verification
+- Automatic author population using Mongoose
 
-Full-text search
+---
 
-Category filters
+## 📅 Booking Engine
 
-Pagination
+- Date-range booking system
+- Booking availability validation
+- Transaction-safe booking creation using MongoDB Transactions
+- Optimistic concurrency control preventing double booking
+- Automatic booking price calculation
+- Displays unavailable booking dates
+- Booking overlap validation
 
-Mapbox integration
+---
 
-Booking
+## ⚡ Performance Optimizations
 
-Date-range booking
+- Redis Cache-Aside Pattern
+- Automatic cache invalidation after CRUD operations
+- MongoDB Text Indexes
+- Server-side Pagination
+- HTTP Response Compression
+- Structured Logging using Pino
+- Graceful fallback when Redis is unavailable
 
-Availability validation
+---
 
-MongoDB Transactions
+## 🔒 Security
 
-Optimistic concurrency control
+- Helmet Security Headers (CSP configured for Mapbox)
+- Express Rate Limiting
+- Joi Request Validation
+- Secure Session Storage
+- Environment Variable Management using dotenv
 
-Double-booking prevention
+---
 
-Price calculation
+## 🧪 Testing
 
-Reviews
+- Jest Unit Tests
+- Supertest Integration Tests
+- MongoDB Memory Server
+- Authentication Flow Testing
+- Protected Route Testing
+- Booking Overlap Validation
+- Listing Route Integration Tests
 
-Ratings
+---
 
-Add/Delete reviews
+## 🐳 DevOps
 
-Ownership checks
+- Dockerized Application
+- Docker Compose
+- GitHub Actions CI
+- Render Deployment
+- MongoDB Atlas
+- Upstash Redis
 
-Performance
+---
 
-Redis Cache-Aside
+# 🏛 Architecture
 
-Cache invalidation
+```text
+                 Client (Browser)
+                        │
+                        ▼
+              EJS + Bootstrap Frontend
+                        │
+                        ▼
+              Express.js Application
+                        │
+      ┌─────────────────┼─────────────────┐
+      ▼                 ▼                 ▼
+MongoDB Atlas      Redis (Upstash)    Cloudinary
+      │                                   │
+      ▼                                   ▼
+ Property Data                     Image Storage
 
-MongoDB indexing
+                    ▼
+                Mapbox API
+            (Maps & Geocoding)
+```
 
-Compression
+### Architecture Highlights
 
-Pino logging
+- MVC Architecture
+- RESTful Routing
+- Server-side Rendering (SSR)
+- Redis Cache-Aside Pattern
+- MongoDB Transactions
+- Optimistic Concurrency Control
+- Cloud Image Storage
+- Managed Cloud Database
 
-Security
+---
 
-Helmet
+# 🛠 Tech Stack
 
-Joi Validation
+## Backend
 
-Express Rate Limiting
+- Node.js
+- Express.js
+- MongoDB Atlas
+- Mongoose
 
-dotenv
+## Frontend
 
-Testing
+- EJS
+- Bootstrap 5
+- HTML5
+- CSS3
+- JavaScript (ES6)
 
-Jest
+## Caching
 
-Supertest
+- Redis (Upstash)
+- ioredis
 
-MongoDB Memory Server
+## Authentication & Security
 
-Auth & Listing Integration Tests
+- Passport.js
+- Express Session
+- connect-mongo
+- Joi
+- Helmet
+- Express Rate Limit
 
-Booking Validation Tests
+## Cloud Services
 
-DevOps
+- Cloudinary
+- Mapbox
 
-Docker
+## DevOps
 
-Docker Compose
+- Docker
+- Docker Compose
+- GitHub Actions
+- Render
 
-GitHub Actions
+## Testing
 
-Render
+- Jest
+- Supertest
+- MongoDB Memory Server
 
-MongoDB Atlas
+## Observability
 
-Upstash Redis
+- Pino Structured Logging
 
-📊 Performance Benchmarks
+---
 
-Metric
+# 📊 Performance Benchmarks
 
-Baseline
+Load tested using **Artillery** against the Listings endpoint.
 
-Indexed + Pagination
+| Metric | Baseline | Indexed + Pagination | Redis Cache (Final) |
+|---------|----------|----------------------|----------------------|
+| Requests | 300 | 600 | **4500** |
+| Median | 47 ms | 96.6 ms | **77.5 ms** |
+| Average | 119.7 ms | 190 ms | **124.6 ms** |
+| p95 | 742.6 ms | 963 ms | **333.7 ms** |
+| p99 | 1224.4 ms | 1525 ms | **1408.4 ms** |
+| Errors | 0 | 0 | **0** |
 
-Redis Cache
+> **Observations**
+>
+> - Redis cache significantly reduced p95 latency.
+> - Zero failed requests during load testing.
+> - Occasional p99 spikes are consistent with MongoDB Atlas M0 shared-tier latency.
+> - Query execution was verified using MongoDB Atlas Explain Plan (IXSCAN, not COLLSCAN).
 
-Requests
+📄 Detailed benchmark results are available in **BENCHMARKS.md**.
 
-300
+---
 
-600
+# 🧠 Engineering Decisions
 
-4500
+This project intentionally prioritizes backend correctness, scalability, and maintainability over unnecessary architectural complexity.
 
-Median
+## Why Redis instead of Kafka/RabbitMQ?
 
-47 ms
+The application has no event-streaming or multi-consumer requirements. Introducing a message broker would add operational complexity without solving a real problem.
 
-96.6 ms
+---
 
-77.5 ms
+## Why EJS instead of React?
 
-Average
+The primary focus of this version was backend engineering:
 
-119.7 ms
+- Authentication
+- Authorization
+- MongoDB Transactions
+- Redis Caching
+- Database Indexing
+- CI/CD
+- Deployment
+- Performance Optimization
 
-190 ms
+A React frontend can be added later without changing the backend architecture.
 
-124.6 ms
+---
 
-p95
+## Why Optimistic Concurrency?
 
-742.6 ms
+A naïve booking flow:
 
-963 ms
+```
+Check Availability
+↓
 
-333.7 ms
+Create Booking
+```
 
-p99
+is vulnerable to race conditions.
 
-1224.4 ms
+StayForge prevents concurrent booking conflicts by forcing competing transactions to update the shared Listing document, allowing MongoDB to detect write conflicts automatically.
 
-1525 ms
+---
 
-1408.4 ms
+## Why MongoDB Transactions?
 
-Errors
+Booking creation spans multiple operations that must either succeed together or fail together.
 
-0
+MongoDB Transactions guarantee atomicity and consistency under concurrent requests.
 
-0
+---
 
-0
+# 📂 Project Structure
 
-See BENCHMARKS.md for detailed results.
-
-🛠 Tech Stack
-
-Backend: Node.js, Express.js, MongoDB Atlas, Mongoose
-
-Frontend: EJS, Bootstrap 5, HTML, CSS, JavaScript
-
-Caching: Redis (Upstash), ioredis
-
-Security: Passport.js, Helmet, Joi, express-session, connect-mongo
-
-Cloud: Cloudinary, Mapbox
-
-DevOps: Docker, Docker Compose, GitHub Actions, Render
-
-Testing: Jest, Supertest, MongoDB Memory Server
-
-⚙️ Installation
-
-git clone https://github.com/chinmaybhardwaj711/Property-Rental-Booking-Platform.git
-cd Property-Rental-Booking-Platform
-npm install
-
-Create a .env file:
-
-ATLASDB_URL=
-REDIS_URL=
-MAP_TOKEN=
-SECRET=
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_KEY=
-CLOUDINARY_SECRET=
-
-Run:
-
-npm start
-
-Tests:
-
-npm test
-
-Docker:
-
-docker compose up --build
-
-📂 Project Structure
-
+```text
 StayForge/
+│
 ├── controllers/
 ├── middleware/
 ├── models/
@@ -219,39 +277,129 @@ StayForge/
 ├── tests/
 ├── utils/
 ├── views/
-├── .github/workflows/
+│
+├── .github/
+│   └── workflows/
+│
 ├── BENCHMARKS.md
 ├── README.md
 ├── Dockerfile
 ├── docker-compose.yml
 ├── app.js
 ├── server.js
-└── package.json
+├── package.json
+└── package-lock.json
+```
 
-🚀 Future Improvements
+---
 
-React Frontend
+# ⚙️ Installation
 
-Booking Dashboard
+Clone the repository
 
-Host Dashboard
+```bash
+git clone https://github.com/chinmaybhardwaj711/Property-Rental-Booking-Platform.git
 
-Stripe/Razorpay
+cd Property-Rental-Booking-Platform
+```
 
-Email Notifications
+Install dependencies
 
-Swagger/OpenAPI
+```bash
+npm install
+```
 
-Playwright/Cypress
+Create a `.env` file
 
-👨‍💻 Author
+```env
+ATLASDB_URL=
+REDIS_URL=
+MAP_TOKEN=
+SECRET=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
+```
 
-Chinmay Bhardwaj
+Start the application
 
-GitHub: https://github.com/chinmaybhardwaj711
+```bash
+npm start
+```
 
-LinkedIn: (Add your profile)
+Run tests
 
-📄 License
+```bash
+npm test
+```
 
-Educational and portfolio purposes.
+Run using Docker
+
+```bash
+docker compose up --build
+```
+
+---
+
+# 📸 Screenshots
+
+*(To be updated after final UI polish.)*
+
+- Home Page
+- Listing Details
+- Booking Flow
+- Search & Pagination
+- Authentication
+- Mobile View
+
+---
+
+# 💼 Engineering Concepts Demonstrated
+
+- RESTful API Design
+- MVC Architecture
+- MongoDB Transactions
+- Optimistic Concurrency Control
+- Redis Cache-Aside Pattern
+- MongoDB Text Indexing
+- Server-side Pagination
+- Session-based Authentication
+- Authorization
+- Cloud Storage Integration
+- Docker Containerization
+- GitHub Actions CI
+- Automated Integration Testing
+- Structured Logging
+- Secure Backend Engineering
+
+---
+
+# 🚀 Future Improvements
+
+- React Frontend (MERN Migration)
+- Booking Cancellation
+- User Booking Dashboard
+- Host Dashboard
+- Wishlist / Favorites
+- Stripe / Razorpay Integration
+- Calendar-based Booking UI
+- Email Notifications
+- Admin Dashboard
+- End-to-End Testing (Playwright/Cypress)
+- Swagger / OpenAPI Documentation
+- Async Background Jobs (BullMQ)
+
+---
+
+# 👨‍💻 Author
+
+**Chinmay Bhardwaj**
+
+- GitHub: https://github.com/chinmaybhardwaj711
+- LinkedIn: *(Add your LinkedIn profile)*
+
+---
+
+# 📄 License
+
+This project is developed for educational, portfolio, and learning purposes.
