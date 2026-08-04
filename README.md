@@ -1,5 +1,4 @@
-🏡 StayForge — Property Rental & Booking Platform
-
+# 🏡 StayForge — Property Rental & Booking Platform
 
 
 StayForge is a production-oriented property rental and booking platform built with Node.js, Express.js, MongoDB Atlas, and an EJS frontend. It showcases transaction-safe booking, optimistic concurrency control, Redis cache-aside caching, MongoDB text-indexed search, Docker, CI/CD, and automated testing.
