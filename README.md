@@ -396,7 +396,7 @@ docker compose up --build
 **Chinmay Bhardwaj**
 
 - GitHub: https://github.com/chinmaybhardwaj711
-- LinkedIn: *(Add your LinkedIn profile)*
+- LinkedIn: https://www.linkedin.com/in/chinmay-bhardwaj-0b9a36316/
 
 ---
 
